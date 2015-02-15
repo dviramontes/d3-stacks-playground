@@ -20,6 +20,7 @@
       "bootstrap": "^3.3.2",
       "browserify": "^8.0.3",
       "d3": "^3.5.5",
+      "lodash": "^3.2.0",
       "react": "^0.12.2",
       "watchify": "^2.2.1"
     }

@@ -1,4 +1,5 @@
 import d3 from 'd3';
+import $ from 'jquery';
 
 //Width and height
 const width = 600;
@@ -7,16 +8,21 @@ const height = 400;
 var dataset = [
 	[{ x: 0, y: 2 }],
 	[{ x: 0, y: 8 }],
+	[{ x: 0, y: 4 }],
+	[{ x: 0, y: 3 }],
+	[{ x: 0, y: 5 }],
+	[{ x: 0, y: 4 }],
 	[{ x: 0, y: 2 }],
 	[{ x: 0, y: 1 }]
 ];
+
+var randomInt = (max) => { return 0 | Math.random() * max + 1; };
 
 // color range (ordinal scale)
 var colors = d3.scale.category20();
 
 // create svg container
-var svg = d3.select("#app")
-	.append("svg")
+var svg = d3.select("#viz")
 	.attr("width", width)
 	.attr("height", height);
 
@@ -24,60 +30,59 @@ var group = svg.append('g');
 
 var stack = d3.layout.stack();
 
-var randomInt = (max) => { return 0 | Math.random() * max + 1; };
+var rects = group.selectAll('rect')
 
+var update = (data, count) => {
+	let offset = 50;
+	let colWidth = 100;
+	let colHeight = 20;
 
+	stack(data); // set data
 
-var update = (newData, count) => {
-
-	const offset = 50;
-	const colWith = 100;
-
-	stack(newData); // set data
-	// scales
-	let xScale = d3.scale.ordinal()
-		.domain(d3.range(newData.length))
-		.rangeRoundBands([0,width], 0.5);
-
+	// scale
 	let yScale = d3.scale.linear()
 		.domain([0,
-			d3.max(newData, (d) => {
-				console.log(d);
+			d3.max(data, (d) => {
 				return d3.max(d, (d) => d.y0 + d.y);
 			})
 		])
 		.range([0, height]);
 
-	let rects = group.selectAll('rect')
-		.data(newData);
-		//.data(newData, (d) => d);
+	rects = group.selectAll('rect')
+		.data(data, (d,i) => d[0].y0);
 
-	rects.attr("class", "update")
-		.style('fill', (d,i) => colors(i))
-		.transition()
-		.duration(750)
-		.attr("x", width/3 + offset)
-		.attr("y", (d) => yScale(d[0].y0))
-		.attr("height", (d) => yScale(d[0].y))
-		.attr("width", colWith);
-
-
-	rects.enter().append('rect')
-		.attr("y", (d, i) => i * 32)
-		.transition()
-
-
+	// update old elements
 	rects
-		.exit()
-		.attr("class", "exit")
+		.attr("class", "update")
 		.transition()
+		.duration(550)
+		.attr("y", (d, i) => i * colHeight)
+
+	// create new elements
+	rects
+		.enter()// enter selection
+			.append('rect')
+			.style('fill', "white")
+			.attr("x", width/2)
+			.attr("y", (d) => yScale(d[0].y0))
+			.attr("height", colHeight)
+			//.attr("height", (d) => yScale(d[0].y))
+			.attr("width", colWidth)
+			.transition()
+			.duration(550)
+			.style('fill', (d,i) => colors(count))
+			.attr("y", (d, i) => i * 32)
+
+	// remove old elements
+	rects
+		.exit() // exit selection
+		.transition()
+		.delay(300)
 		.duration(750)
-		.attr("y", 60)
+		.attr("y", (d,i)=> i * 32)
 		.style("fill-opacity", 1e-6)
-		.remove();
-
+		.remove()
 };
-
 
 // run
 update(dataset);
@@ -88,10 +93,9 @@ var count = 0;
 //update
 setInterval(() => {
 	let r = randomInt(8);
-	console.log(`i ran update ::  ${r}`);
-	dataset.shift();
-	dataset.unshift([{x:0,y:r}]);
-	console.log(dataset.length);
+	console.log(`i ran update :: ${r} :: lenght ${newset.length}`);
+	dataset.pop()
+	dataset.unshift([{x:0,y:r}])
 	update(dataset, count++);
 }, 1500);
 
