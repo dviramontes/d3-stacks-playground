@@ -1,18 +1,27 @@
- {
+{
   "name": "D3-Stacks-Playground",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {
-    "6to5ify": "^3.1.0",
-    "browserify": "^8.0.3",
-    "react": "^0.12.2",
-    "watchify": "^2.2.1"
-  },
+  "dependencies": {},
   "devDependencies": {},
   "scripts": {
     "watch": "watchify -t 6to5ify ./src/app.jsx -o ./dist/bundle.js -v"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "jspm": {
+    "directories": {
+      "lib": "src",
+      "packages": "jspm_packages"
+    },
+    "dependencies": {
+      "6to5ify": "^3.1.0",
+      "bootstrap": "^3.3.2",
+      "browserify": "^8.0.3",
+      "d3": "^3.5.5",
+      "react": "^0.12.2",
+      "watchify": "^2.2.1"
+    }
+  }
 }
