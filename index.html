@@ -14,24 +14,25 @@
         <p class="text-center">A Stack</p>
         <div class="text-center">
           <div class="btn-group" role="group" aria-label="stack type selection">
-            <button type="button" class="btn btn-default">FIFO</button>
-            <button type="button" class="btn btn-default">LIFO</button>
+            <button id="push" type="button" class="btn btn-default">PUSH</button>
+            <button id="pop" type="button" class="btn btn-default">POP</button>
           </div>
-        </div>
-        <hr/>
-        <div id="app">
-          <svg id="viz"width="600" height="400"></svg>
+          <div id="app">
+            <svg id="viz"width="600" height="400"></svg>
+          </div>
+          <hr/>
         </div>
       </div>
     </div>
   </div>
 </div>
+<!--DEV-->
 <script src="/jspm_packages/system.js"></script>
 <script src="config.js"></script>
 <script>
   System.import('src/main');
 </script>
 <!--PROD-->
-<!--<scrip src="build.js"></scrip>-->
+<!--<script src="build.js"></script>-->
 </body>
 </html>

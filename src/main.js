@@ -16,8 +16,6 @@ var dataset = [
 	[{ x: 0, y: 1 }]
 ];
 
-var randomInt = (max) => { return 0 | Math.random() * max + 1; };
-
 // color range (ordinal scale)
 var colors = d3.scale.category20();
 
@@ -30,51 +28,43 @@ var group = svg.append('g');
 
 var stack = d3.layout.stack();
 
-var rects = group.selectAll('rect')
+var rects = group.selectAll('rect');
+
+var count = 0;
+
+$("#push").on("click", () => dataset.unshift([{x:0,y:10}]));
+
+$("#pop").on("click", () => dataset.pop());
 
 var update = (data, count) => {
-	let offset = 50;
 	let colWidth = 100;
 	let colHeight = 20;
 
 	stack(data); // set data
 
-	// scale
-	let yScale = d3.scale.linear()
-		.domain([0,
-			d3.max(data, (d) => {
-				return d3.max(d, (d) => d.y0 + d.y);
-			})
-		])
-		.range([0, height]);
-
 	rects = group.selectAll('rect')
 		.data(data, (d,i) => d[0].y0);
 
-	// update old elements
-	rects
-		.attr("class", "update")
+	rects// update old elements
 		.transition()
 		.duration(550)
 		.attr("y", (d, i) => i * colHeight)
 
-	// create new elements
-	rects
+	rects// create new elements
 		.enter()// enter selection
-			.append('rect')
-			.style('fill', "white")
-			.attr("x", width/2)
-			.attr("y", (d) => yScale(d[0].y0))
-			.attr("height", colHeight)
-			//.attr("height", (d) => yScale(d[0].y))
-			.attr("width", colWidth)
-			.transition()
-			.duration(550)
-			.style('fill', (d,i) => colors(count))
-			.attr("y", (d, i) => i * 32)
+		.append('rect')
+		.style('fill', "white")
+		.attr("x", width/2 - colWidth/2)
+		.attr("y", colHeight)
+		.attr("height", colHeight)
+		//.attr("height", (d) => yScale(d[0].y))
+		.attr("width", colWidth)
+		.transition()
+		.duration(550)
+		.style('fill', (d,i) => colors(count))
+		.attr("y", (d, i) => i * 32)
 
-	// remove old elements
-	rects
+	rects// remove old elements
 		.exit() // exit selection
 		.transition()
 		.delay(300)
@@ -87,15 +77,40 @@ var update = (data, count) => {
 // run
 update(dataset);
 
-var newset = dataset.slice();
-var count = 0;
-
-//update
+// update
 setInterval(() => {
-	let r = randomInt(8);
-	console.log(`i ran update :: ${r} :: lenght ${newset.length}`);
 	dataset.pop()
-	dataset.unshift([{x:0,y:r}])
+	dataset.unshift([{x:0,y:10}])
 	update(dataset, count++);
 }, 1500);
+
+// when
+// primitive data types
+
+var test = [1,2,3,4,5,6,7,8,9,9];
+
+var checkForSimpleDataTypes = function(d){
+	return typeof d === 'number'|| typeof d === 'string';
+}
+
+var reverse = (arr) => {
+	if(arr.every(checkForSimpleDataTypes)){
+		return arr.reverse();
+	}
+};
+
+var print = reverse(test);
+console.log(test2);
+
+// when complex
+// datatypes i.e. {objects}
+
+var test2 =  [
+	[{ x: 0, y: 2 }],
+	[{ x: 0, y: 8 }],
+	[{ x: 0, y: 4 }]
+];
+
+export default {}
+
 
