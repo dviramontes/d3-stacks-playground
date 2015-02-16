@@ -1,18 +1,24 @@
-###first
+### demo site 
 
-* `npm install`
+* [http://dviramontes.github.io/d3-stacks-playground](http://dviramontes.github.io/d3-stacks-playground)
 
-###source
+###setup
 
-* hesrc/main.js
+* [install jspm](http://jspm.io/)
 
-###later
+* `jspm install`
 
-+ build for prod with:
-    - `jspm bundle src/main --inject`
+###development 
+
+* src/main.js
+
+###production
+
++ with system.js + config.js :
+    - `jspm bundle src/main build.js --inject`
     
-+ system.js + config.js + self-executing-module();
-    - `jspm bundle-sfx lib/main`
++ with system.js + config.js + self-executing-module();
+    - `jspm bundle-sfx src/main build.js`
     
     minified:
-    - `jspm bundle-sfx src/main main.js --minify`
+    - `jspm bundle-sfx src/main build.js --minify`

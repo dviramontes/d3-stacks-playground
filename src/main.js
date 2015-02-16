@@ -1,10 +1,15 @@
 import d3 from 'd3';
 import $ from 'jquery';
+import _ from 'lodash';
 
-//Width and height
-const width = 600;
+
+/*===================================
+ * 1. IMPLEMENT A STACK (PUSH AND POP)
+===================================*/
+
+
+const width  = 600;
 const height = 400;
-
 var dataset = [
 	[{ x: 0, y: 2 }],
 	[{ x: 0, y: 8 }],
@@ -15,21 +20,14 @@ var dataset = [
 	[{ x: 0, y: 2 }],
 	[{ x: 0, y: 1 }]
 ];
-
-// color range (ordinal scale)
 var colors = d3.scale.category20();
-
 // create svg container
 var svg = d3.select("#viz")
 	.attr("width", width)
 	.attr("height", height);
-
 var group = svg.append('g');
-
 var stack = d3.layout.stack();
-
 var rects = group.selectAll('rect');
-
 var count = 0;
 
 $("#push").on("click", () => dataset.unshift([{x:0,y:10}]));
@@ -80,36 +78,55 @@ update(dataset);
 // update
 setInterval(() => {
 	dataset.pop()
-	dataset.unshift([{x:0,y:10}])
+	dataset.unshift([{x:0,y:5}])
 	update(dataset, count++);
 }, 1500);
 
-// when
-// primitive data types
 
-var test = [1,2,3,4,5,6,7,8,9,9];
+/*================================
+ * 2. REVERSE AN ARRAY OF N ITEMS
+=================================*/
 
-var checkForSimpleDataTypes = function(d){
+
+// NOTE : ES5 has a reverse array method
+// Array.prototype.reverse
+// and we would have to have a very good reason
+// for trying to roll our own, but say we had
+// no choice but to roll our own...
+
+// when primitive types
+var test = _.range(10);
+
+// when complex types i.e. {objects}
+var test2 = dataset.slice(); // clone the dataset above
+
+var checkForSimpleDataTypes = (d) => {
 	return typeof d === 'number'|| typeof d === 'string';
-}
+};
 
 var reverse = (arr) => {
+	var len = arr.length;
 	if(arr.every(checkForSimpleDataTypes)){
-		return arr.reverse();
+	    return arr.map((e,i,a) => {
+			return a[--len];
+		});
+	}else{
+		return
 	}
 };
 
-var print = reverse(test);
-console.log(test2);
+console.log(reverse(test));
 
-// when complex
-// datatypes i.e. {objects}
 
-var test2 =  [
-	[{ x: 0, y: 2 }],
-	[{ x: 0, y: 8 }],
-	[{ x: 0, y: 4 }]
-];
+/*================================
+ * 3. PRINT OUT THE EVEN NUMBERS
+ *    FROM 0 to 100
+ =================================*/
+
+var oneHundred = _.range(100);
+
+var evens = oneHundred.filter((e)=> e % 2 === 0 ? e : null);
+console.log(evens);
 
 export default {}
 
