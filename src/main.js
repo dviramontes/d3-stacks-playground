@@ -117,10 +117,10 @@ console.log(reverse(test2));
  =================================*/
 
 console.log("3.");
+var oneHundred = _.range(100);
+var evens = (coll) => coll.filter((e)=> e % 2 === 0 ? e : null);
+console.log(evens(oneHundred));
 
-var evens = _.range(100).filter((e)=> e % 2 === 0 ? e : null);
-console.log(evens);
-
-export default {}
+export {reverse,evens}
 
 
