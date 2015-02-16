@@ -3,8 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {},
-  "devDependencies": {},
+  "dependencies": {
+    "gulp-jasmine": "^2.0.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "karma-jspm": "^1.1.4"
+  },
   "scripts": {
     "watch": "watchify -t 6to5ify ./src/app.jsx -o ./dist/bundle.js -v"
   },
