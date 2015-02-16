@@ -12,15 +12,12 @@
   "license": "ISC",
   "jspm": {
     "directories": {
-      "lib": "src",
-      "packages": "jspm_packages"
+      "lib": "src"
     },
     "dependencies": {
-      "6to5ify": "^3.1.0",
       "bootstrap": "^3.3.2",
       "d3": "^3.5.5",
-      "jquery": "^2.1.3",
-      "watchify": "^2.2.1"
+      "jquery": "^2.1.3"
     }
   }
 }
