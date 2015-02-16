@@ -1,28 +1,19 @@
-var cwd = process.cwd();
-var path = require('path');
-var initJspm = require('karma-jspm');
+import {reverse as myReverseFunction, evens} from 'src/main';
 
+var testArray = [1,2,3,4,5];
 
-describe('jspm plugin init', function(){
-	var files, jspm, client;
-	var basePath = ".";
-
-	beforeEach(function(){
-		files = [];
-		jspm = {
-			config: 'config.js',
-			loadFiles: ['src/**/*.js'],
-			//packages: 'custom_packages/',
-			serveFiles: ['testfile.js']
-		};
-		client = {};
-
-		initJspm(files, basePath, jspm, client);
+describe('custom reverse function', ()=>{
+	it('should be able to reverse an array of n elements', ()=>{
+		let testColl = testArray.slice(); // need to clone the array because .reverse() mutates the array
+		expect(myReverseFunction).toBeDefined();
+		expect(myReverseFunction(testColl)).toEqual(testArray.reverse());
 	});
+});
 
-	it('should add adapter.js to the top of the files array', function(){
-		//expect(true).toEqual(cwd + '/src/adapter.js');
-		expect(true).toEqual(false);
-	});
-
+describe('a filter evens in collection function', ()=>{
+	it('should be able to filter an array', ()=>{
+		let testColl = [1,2,3,4,5,6,7,8,9,10];
+		expect(evens).toBeDefined();
+		expect(evens(testColl)).toEqual([2,4,6,8,10]);
+	})
 });

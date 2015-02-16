@@ -2,15 +2,19 @@
 
 * [http://dviramontes.github.io/d3-stacks-playground](http://dviramontes.github.io/d3-stacks-playground)
 
+###*main point of interest : src/main.js* and test/main.spec.js
+
 ###setup
 
 * [install jspm](http://jspm.io/)
 
-* `jspm install`
+* then run `jspm install`
 
-###development 
+* and `npm install`
 
-* src/main.js
+###test
+
+* `karma start karma.config.js`
 
 ###production
 
@@ -20,5 +24,4 @@
 + with system.js + config.js + self-executing-module();
     - `jspm bundle-sfx src/main build.js`
     
-    minified:
-    - `jspm bundle-sfx src/main build.js --minify`
+    - minified `jspm bundle-sfx src/main build.js --minify`
